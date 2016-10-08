@@ -8,5 +8,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tribunal_tasaciones_fragment">TRIBUNAL DE TASACIONES</string>
-    <string name="hello_blank_fragment2">Hello blank fragment2</string>
+    <string name="fitte_fragment">FITTE Y CERVINI</string>
+    <string name="valvano_fragment">VALVANO</string>
+    <string name="ross_fragment">ROSS - HEIDECKE</string>
+   <!--BANNER-->
+    <string name="banner_tribunal">ca-app-pub-5908373302541656/4184742125</string>
+    <string name="banner_fitte">ca-app-pub-5908373302541656/8101420927</string>
+    <string name="banner_valvano">ca-app-pub-5908373302541656/9578154127</string>
+    <!--INTERSTITIAL-->
+    <string name="interstitial_full_screen">ca-app-pub-5908373302541656/8475340926</string>
+
 </resources>

@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/title"
             style="@style/TextTextStyle"
-            android:text="@string/tribunal_tasaciones_fragment"
+            android:text="@string/ross_fragment"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -39,15 +39,15 @@
             android:id="@+id/editTextX"
             style="@style/EditTextStyle"
             android:layout_weight="1"
-            android:hint="Ingrese frente"
-            android:inputType="numberDecimal" />
+            android:hint="Ingrese edad"
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/editTextY"
             style="@style/EditTextStyle"
             android:layout_weight="1"
-            android:hint="Ingrese fondo"
-            android:inputType="number" />
+            android:hint="Ingrese estado"
+            android:inputType="numberDecimal" />
 
     </LinearLayout>
 

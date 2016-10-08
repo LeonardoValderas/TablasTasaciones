@@ -16,50 +16,52 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.valderas.tablastasaciones.R;
-import com.valderas.tablastasaciones.model.TribunalTasaciones;
+import com.valderas.tablastasaciones.model.Valvano;
 
-public class TableTribunalTasaciones extends Fragment {
-
+public class TableII extends Fragment {
     private TextView resultado, error, title;
-    private EditText x, y;
+    private EditText x;
     private ImageButton clean, start;
-    private TribunalTasaciones tribunalTasaciones;
+    private Valvano valvano;
+    private int CheckedPositionFragment;
     private InterstitialAd mInterstitialAd;
     private int conteo = 0;
     private AdView mAdView;
     private AdRequest adRequest;
 
+    public static TableII newInstance() {
+        TableII fragment = new TableII();
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tribunal_tasaciones, container, false);
+        View v = inflater.inflate(R.layout.fragment_valvano, container, false);
 
         x = (EditText) v.findViewById(R.id.editTextX);
-        y = (EditText) v.findViewById(R.id.editTextY);
         resultado = (TextView) v.findViewById(R.id.textViewResultado);
         error = (TextView) v.findViewById(R.id.textViewError);
-        title = (TextView) v.findViewById(R.id.title);
         clean = (ImageButton) v.findViewById(R.id.clean);
         start = (ImageButton) v.findViewById(R.id.start);
+        title = (TextView) v.findViewById(R.id.title);
         mAdView = (AdView) v.findViewById(R.id.adView);
-
         return v;
     }
-
 
     @Override
     public void onActivityCreated(Bundle state) {
         super.onActivityCreated(state);
-
-        tribunalTasaciones = new TribunalTasaciones(getActivity());
-        init();
+        valvano = new Valvano(getActivity());
+        if (state != null) {
+            CheckedPositionFragment = state.getInt("curChoice", 0);
+        } else {
+            init();
+        }
     }
 
     public void init() {
-        y.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2)});
-        x.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4)});
-        title.setText(getActivity().getResources().getString(R.string.tribunal_tasaciones_fragment));
         title.setPaintFlags(title.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        x.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
         InterstitialAd();
         BannerAd();
         start.setOnClickListener(new View.OnClickListener() {
@@ -67,21 +69,10 @@ public class TableTribunalTasaciones extends Fragment {
             public void onClick(View view) {
                 conteoClick();
                 if (x.getText().toString().equals("")) {
-                    x.setError("Debe ingresar el frente");
-                } else if (y.getText().toString().equals("")) {
-                    y.setError("Debe ingresar el frente");
+                    x.setError("Debe ingresar el indice");
                 } else {
                     cleanError();
-                    String frente =  x.getText().toString().trim();
-
-                    int valorFrente = nrOfDecimal(frente);
-                    if(valorFrente == 0){
-                        frente = frente+".00";
-                    }else if(valorFrente == 1){
-                        frente = frente+"0";
-                    }
-
-                    String valor = tribunalTasaciones.getValorMetros(getValor(frente, y.getText().toString().trim()));
+                    String valor = valvano.getValorTablaII(getValor(x.getText().toString().trim()));
 
                     if(valor == null)
                     errorText();
@@ -94,11 +85,29 @@ public class TableTribunalTasaciones extends Fragment {
         clean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 conteoClick();
-                 cleanController();
+                conteoClick();
+                cleanController();
             }
         });
+    }
 
+    public Double getValor(String x) {
+        return Double.parseDouble(x);
+    }
+
+    public void errorText(){
+        resultado.setText("");
+        error.setVisibility(View.VISIBLE);
+        error.setText("Indice incorrecto");
+    }
+    public void cleanController(){
+        resultado.setText("");
+        x.setText("");
+        x.clearFocus();
+        error.setVisibility(View.GONE);
+    }
+    public void cleanError(){
+        error.setVisibility(View.GONE);
     }
 
     private void showInterstitial() {
@@ -106,25 +115,13 @@ public class TableTribunalTasaciones extends Fragment {
             mInterstitialAd.show();
         }
     }
-    private int nrOfDecimal(String nr){
-        int len = nr.length();
-        int pos = len;
-        for(int i=0 ; i<len; i++){
-            if(nr.charAt(i)=='.'){
-                pos=i+1;
-                break;
-            }
-        }
-        return len-pos;
-    }
-
     public void InterstitialAd() {
         mInterstitialAd = new InterstitialAd(getActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
 
         adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-               // .addTestDevice("B52960D9E6A2A5833E82FEA8ACD4B80C")
+             //   .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+              //  .addTestDevice("B52960D9E6A2A5833E82FEA8ACD4B80C")
                 .build();
         mInterstitialAd.loadAd(adRequest);
 
@@ -132,43 +129,47 @@ public class TableTribunalTasaciones extends Fragment {
     public void BannerAd() {
 
         adRequest = new AdRequest.Builder()
-             //   .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-             //   .addTestDevice("B52960D9E6A2A5833E82FEA8ACD4B80C")
+           //   .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+           //  .addTestDevice("B52960D9E6A2A5833E82FEA8ACD4B80C")
                 .build();
         mAdView.loadAd(adRequest);
     }
 
-    public String getValor(String x, String y) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(y);
-        stringBuilder.append("-");
-        stringBuilder.append(x);
 
-        return stringBuilder.toString();
-    }
-
-    public void errorText(){
-        resultado.setText("");
-        error.setVisibility(View.VISIBLE);
-        error.setText("No existen los paramentros");
-    }
-    public void cleanController(){
-        resultado.setText("");
-        y.setText("");
-        x.setText("");
-        y.clearFocus();
-        error.setVisibility(View.GONE);
-    }
-    public void cleanError(){
-        error.setVisibility(View.GONE);
-    }
-
-    public  void conteoClick(){
-        if(conteo==5){
+    public void conteoClick() {
+        if (conteo == 5) {
+        //    mInterstitialAd.setAdListener(new AdListener() {
+             //   public void onAdLoaded() {
                     showInterstitial();
-            conteo=0;
-        }else{
+          //      }
+           // });
+            conteo = 0;
+        } else {
             conteo++;
         }
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }

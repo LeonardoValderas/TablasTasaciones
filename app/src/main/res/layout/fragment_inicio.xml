@@ -2,13 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.TableTribunalTasaciones">
-
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_set_as"/>
-
-
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_marginTop="120dp"
+            style="@style/TextTextStyle"
+            android:text="TABLAS\nDE\nTASACIONES"
+            android:textSize="40dp" />
+    </LinearLayout>
 </LinearLayout>

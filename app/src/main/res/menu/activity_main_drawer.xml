@@ -3,21 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/tribunal"
+            android:icon="@android:drawable/ic_menu_set_as"
             android:title="Tribunal de tasaciones" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/fitte_cervini"
+            android:icon="@android:drawable/ic_menu_set_as"
+            android:title="Fitte y Cervini" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Slideshow" />
+            android:id="@+id/valvano"
+            android:icon="@android:drawable/ic_menu_set_as"
+            android:title="Valvano" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Tools" />
+            android:id="@+id/ross"
+            android:icon="@android:drawable/ic_menu_set_as"
+            android:title="Ross - Heidecke" />
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@android:drawable/ic_menu_set_as"-->
+            <!--android:title="Tools" />-->
     </group>
 
     <!--<item android:title="Communicate">-->
